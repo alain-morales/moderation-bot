@@ -1,3 +1,7 @@
+const { MessageEmbed, Message} = require("discord.js")
+
+
+
 module.exports = {
     name: "ping",
     category: "info",
@@ -5,6 +9,13 @@ module.exports = {
     devOnly: false,
     run: async ({client, message, args}) => {
         const timeTaken = Date.now() - message.createdTimestamp;
-        message.reply(`Pong! This message had a latency of ${timeTaken}ms.`)
+        const pingEmbed = {
+            title: "Pong!",
+            color: "#4c80d4",
+            footer: { 
+                text: `This message had a latency of ${timeTaken}ms.` 
+        }
+        };
+        message.reply({ embeds: [pingEmbed]})
     }
 }
