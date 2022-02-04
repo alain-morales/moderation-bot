@@ -44,8 +44,13 @@ function initEvents(bot) {
     client.on("ready", () => {
         triggerEventHandler(bot, "ready")
     })
-
     client.on("messageCreate", (message) => {
         triggerEventHandler(bot, "messageCreate", message)
+    })
+    client.on("messageDelete", (message) => {
+        triggerEventHandler(bot, "messageDelete", message)
+    })
+    client.on("messageUpdate", (oldMessage, newMessage) => {
+        triggerEventHandler(bot, "messageUpdate", oldMessage, newMessage)
     })
 }
