@@ -1,14 +1,55 @@
-const Discord = require('discord.js');
-const config = require('./config.json');
-const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
+const Discord = require("discord.js")
 require("dotenv").config()
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-  });
+// const generateImage = require("./generateImage")
 
-const prefix = "-";
+const client = new Discord.Client({
+    intents: [
+        "GUILDS",
+        "GUILD_MESSAGES",
+        "GUILD_MEMBERS"
+    ]
+})
 
+let bot = {
+    client, 
+    prefix: "-",
+    owners: ["326862673000136714"]
+}
+
+client.commands = new Discord.Collection()
+client.events = new Discord.Collection()
+
+client.loadEvents = (bot, reload) => require("./handlers/events")(bot, reload)
+client.loadCommands = (bot, reload) => require("./handlers/commands")(bot, reload)
+
+client.loadEvents(bot, false)
+client.loadCommands(bot, false)
+
+module.exports = bot
+
+// client.on("ready", () => {
+//     console.log(`Logged in as ${client.user.tag}`)
+// })
+
+// client.on("messageCreate", (message) => {
+//     if (message.content == "hi"){
+//         message.reply("Hello World!")
+//     }
+// })
+
+// const welcomeChannelId = "926530810008453120"
+
+// client.on("guildMemberAdd", async (member) => {
+//     const img = await generateImage(member)
+//     member.guild.channels.cache.get(welcomeChannelId).send({
+//         content: `<@${member.id}> Welcome to the server!`,
+//         files: [img]
+//     })
+// })
+
+
+/*
 client.on("messageCreate", function(message) {
 if (message.author.bot) return;
 if (!message.content.startsWith(prefix)) return;
@@ -27,5 +68,6 @@ else if (command === "women") {
 }
 
 });
+*/
 
-client.login(config.BOT_TOKEN);
+client.login(process.env.TOKEN);
