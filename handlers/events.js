@@ -41,6 +41,9 @@ function triggerEventHandler(bot, event, ...args){
 function initEvents(bot) {
     const {client} = bot 
 
+    client.on("guildMemberAdd", (member) => {
+        triggerEventHandler(bot, "guildMemberAdd", member)
+    })
     client.on("ready", () => {
         triggerEventHandler(bot, "ready")
     })

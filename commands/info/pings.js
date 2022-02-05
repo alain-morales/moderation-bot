@@ -1,6 +1,5 @@
-const { MessageEmbed, Message} = require("discord.js")
-
-
+const Discord = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: "ping",
@@ -8,14 +7,16 @@ module.exports = {
     permissions: [],
     devOnly: false,
     run: async ({client, message, args}) => {
-        const timeTaken = Date.now() - message.createdTimestamp;
-        const pingEmbed = {
-            title: "Pong!",
-            color: "#4c80d4",
-            footer: { 
-                text: `This message had a latency of ${timeTaken}ms.` 
-        }
-        };
-        message.reply({ embeds: [pingEmbed]})
+
+        message.reply('Calculating ping...').then((resultMessage) => {
+            const ping = resultMessage.createdTimestamp - message.createdTimestamp
+            const lat = new MessageEmbed()
+            .setColor('#57F287')
+            .setTitle('Pong!\n')
+            .setDescription(`**Bot Latency:** ${ping}_ms_\n\n**API Latency:** ${client.ws.ping}_ms_`)
+            .setTimestamp();
+            resultMessage.edit({ embeds: [lat] });
+        })
+
     }
 }
